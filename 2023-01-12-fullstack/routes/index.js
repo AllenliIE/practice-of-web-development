@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const projectController = require("../controllers/project-controller");
+
+router.get("/projects", projectController.getProjects);
+router.use("/", (req, res) => res.redirect("/projects"));
 
 module.exports = router;
