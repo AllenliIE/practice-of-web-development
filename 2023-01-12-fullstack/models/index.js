@@ -8,6 +8,7 @@ const env = process.env.NODE_ENV || "development";
 const config = require(path.resolve(__dirname, "../config/config.json"))[env];
 const db = {};
 
+//建立資料庫連線
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -20,6 +21,7 @@ if (config.use_env_variable) {
   );
 }
 
+//動態引入 models
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (
@@ -31,12 +33,14 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
+//設定 models 的關聯
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
+//匯出物件
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
