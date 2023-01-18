@@ -33,7 +33,7 @@ const userController = {
   },
   signIn: (req, res) => {
     req.flash("success_messages", "登入成功！");
-    res.redirect("/prjects");
+    res.redirect("/projects");
   },
   logout: (req, res) => {
     req.flash("success_messages", "登出成功！");
